@@ -133,7 +133,7 @@ def callEventHandlers(_abi):
                 info('event: %s, name: %s, contract_address: %s', event, name, event['address'])
 
                 contract_address = event['address']
-                new_contract = getContract(contract_address)
+                new_contract = getContract(contract_address, _abi)
                 callEventHandle(event['event'], new_contract, event)
     except Exception as e:
         error('callEventHandlers fail, e: %s', e)
