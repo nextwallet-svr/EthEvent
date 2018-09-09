@@ -29,15 +29,16 @@ callEventHandlers(_abi)
 
 ## 示例
 ```
-#EventCreate的处理函数
+#用户实现EventCreate的处理函数
 def event_create_handler(contract, event):
     pass
 
-#注册event及其处理函数
+#用户调用注册event及其处理函数
 def regUserEventHandlers():
     regEventHandler("EventCreate", event_create_handler)
 
-#创建event filter (latest)，并在loop中接收和处理event
+#创建1
+#用户调用创建event filter (latest)，并在loop中接收和处理event
 def main_loop_1():
     regUserEventHandlers()
     createEventFilters(getAbi(), 'latest')
@@ -48,7 +49,8 @@ def main_loop_1():
             error('event filte loop fail, e: %s', e)
         time.sleep(1)
 
-#创建event filter (指定from，to block, confirm_block_num)，并在loop中接收和处理event
+#创建2
+#用户调用创建event filter (指定from，to block, confirm_block_num)，并在loop中接收和处理event
 def main_loop_2():
     regUserEventHandlers()
     while True:
