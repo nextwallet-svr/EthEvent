@@ -52,8 +52,8 @@ def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
     global g_event_filter_map
 
     try:
-    	if (type(from_block) == str and from_block != 'latest'):
-    		error('invalid args, from_block: %s', from_block)
+        if (type(from_block) == str and from_block != 'latest'):
+            error('invalid args, from_block: %s', from_block)
             raise(Exception('SERVER_INTERNAL_ERR'))
 
         # if (type(from_block) == int):
@@ -81,14 +81,14 @@ def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
                 event_filter = f.createFilter(fromBlock=from_block)
 
             if (type(from_block) == int and to_block == 0):
-            	event_filter = f.createFilter(fromBlock=from_block - confirm_block_num)
+                event_filter = f.createFilter(fromBlock=from_block - confirm_block_num)
 
             if (type(from_block) == int and to_block > from_block):
                 event_filter = f.createFilter(fromBlock=from_block - confirm_block_num, toBlock=to_block)
 
             if (event_filter is None):
                 error('createEventFilters, createFilter none, name: %s, from_block: %d, to_block: %d, confirm_block_num: %d', 
-                		name, from_block, to_block, confirm_block_num)
+                        name, from_block, to_block, confirm_block_num)
                 raise(Exception('createFilter fail'))
 
             #filter绑定name
@@ -97,20 +97,20 @@ def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
             return g_event_filter_map
         except (Exception) as e:
             error('%s： createEventFilters, e: %s, from_block: %d, to_block: %d, confirm_block_num: %d', 
-            		name, e, from_block, to_block, confirm_block_num)
+                    name, e, from_block, to_block, confirm_block_num)
             raise(e)
 
 def destroyEventFilters():
-	global g_event_filter_map
-	if (g_event_filter_map is None):
-		return
+    global g_event_filter_map
+    if (g_event_filter_map is None):
+        return
 
-	for k, v in g_event_filter_map.items():
-		try:
-			getWeb3().eth.uninstallFilter(v.filter_id)
-		except Exception as e:
+    for k, v in g_event_filter_map.items():
+        try:
+            getWeb3().eth.uninstallFilter(v.filter_id)
+        except Exception as e:
             error('uninstallFilter fail, e: %s, name: %s, v: %s, filter_id: %s', 
-            		e, k, v, v.filter_id)
+                    e, k, v, v.filter_id)
             continue
 
 def callEventHandlers(_abi):
