@@ -83,7 +83,7 @@ def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
             if (type(from_block) == int and to_block == 0):
                 event_filter = f.createFilter(fromBlock=from_block - confirm_block_num)
 
-            if (type(from_block) == int and to_block > from_block):
+            if (type(from_block) == int and to_block >= from_block):
                 event_filter = f.createFilter(fromBlock=from_block - confirm_block_num, toBlock=to_block)
 
             if (event_filter is None):
