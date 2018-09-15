@@ -140,5 +140,5 @@ def callEventHandlers(_abi, all = 1):
                 new_contract = getContract(contract_address, _abi)
                 callEventHandle(event['event'], new_contract, event)
         except Exception as e:
-            error('callEventHandlers fail, e: %s, name: %d', e, name)
+            error('callEventHandlers fail, e: %s, name: %s', e, name)
             continue
