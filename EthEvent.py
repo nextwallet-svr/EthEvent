@@ -93,12 +93,12 @@ def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
 
             #filter绑定name
             g_event_filter_map[name] = event_filter
-            info('g_event_filter_map: %s', g_event_filter_map)
-            return g_event_filter_map
         except (Exception) as e:
             error('%s： createEventFilters, e: %s, from_block: %d, to_block: %d, confirm_block_num: %d', 
                     name, e, from_block, to_block, confirm_block_num)
             raise(e)
+    info('g_event_filter_map: %s', g_event_filter_map)
+    return g_event_filter_map
 
 def destroyEventFilters():
     global g_event_filter_map
