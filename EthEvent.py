@@ -11,7 +11,7 @@ from EthUtils import *
 
 ######################################################################
 g_event_handler_dict = {}
-g_event_filter_map = {}
+# g_event_filter_map = {}
 
 def getContract(contract_address, _abi):
     try:
@@ -49,8 +49,9 @@ def regEventHandler(event_name, handler):
     return True
 
 def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
-    global g_event_filter_map
+    # global g_event_filter_map
 
+    event_filter_map = {}
     try:
         if (type(from_block) == str and from_block != 'latest'):
             error('invalid args, from_block: %s', from_block)
@@ -92,20 +93,20 @@ def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
                 raise(Exception('createFilter fail'))
 
             #filter绑定name
-            g_event_filter_map[name] = event_filter
+            event_filter_map[name] = event_filter
         except (Exception) as e:
             error('%s： createEventFilters, e: %s, from_block: %d, to_block: %d, confirm_block_num: %d', 
                     name, e, from_block, to_block, confirm_block_num)
             raise(e)
-    info('g_event_filter_map: %s', g_event_filter_map)
-    return g_event_filter_map
+    info('event_filter_map: %s', event_filter_map)
+    return event_filter_map
 
-def destroyEventFilters():
-    global g_event_filter_map
-    if (g_event_filter_map is None):
-        return
+def destroyEventFilters(event_filter_map):
+    # global g_event_filter_map
+    # if (g_event_filter_map is None):
+    #     return
 
-    for k, v in g_event_filter_map.items():
+    for k, v in event_filter_map.items():
         try:
             getWeb3().eth.uninstallFilter(v.filter_id)
         except Exception as e:
@@ -113,8 +114,8 @@ def destroyEventFilters():
                     e, k, v, v.filter_id)
             continue
 
-def callEventHandlers(_abi, all = 1):
-    for name, event_filter in g_event_filter_map.items():
+def callEventHandlers(event_filter_map, _abi, all = 1):
+    for name, event_filter in event_filter_map.items():
         try:
             events = {}
             if (all == 1):
