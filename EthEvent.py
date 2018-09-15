@@ -113,10 +113,14 @@ def destroyEventFilters():
                     e, k, v, v.filter_id)
             continue
 
-def callEventHandlers(_abi):
+def callEventHandlers(_abi, all = 1):
     try:
         for name, event_filter in g_event_filter_map.items():
-            events = event_filter.get_new_entries()
+        	events = {}
+        	if (all == 1):
+            	events = event_filter.get_all_entries()
+            else:
+            	events = event_filter.get_new_entries()
 
             if (events is None or len(events) == 0):
                 debug('events empty, name: %s', name)
