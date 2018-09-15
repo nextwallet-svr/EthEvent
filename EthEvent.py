@@ -130,14 +130,14 @@ def callEventHandlers(event_filter_map, _abi, all = 1):
                 debug('events empty, name: %s', name)
                 continue
 
-            for e in events:
-                info('get name: %s, evn: %s', name, e)
+            for ev in events:
+                info('get name: %s, evn: %s', name, ev)
 
-                if (e is None):
-                    debug('None evn: %s, events: %s, name: %s', e, events, name)
+                if (ev is None):
+                    debug('None evn: %s, events: %s, name: %s', ev, events, name)
                     continue
 
-                event = dict(e)
+                event = dict(ev)
                 info('event: %s, name: %s, contract_address: %s', event, name, event['address'])
 
                 contract_address = event['address']
@@ -145,4 +145,4 @@ def callEventHandlers(event_filter_map, _abi, all = 1):
                 callEventHandle(event['event'], new_contract, event)
         except Exception as e:
             error('callEventHandlers fail, e: %s, name: %s', e, name)
-            continue
+            raise(e)
