@@ -114,8 +114,8 @@ def destroyEventFilters():
             continue
 
 def callEventHandlers(_abi, all = 1):
-    try:
-        for name, event_filter in g_event_filter_map.items():
+    for name, event_filter in g_event_filter_map.items():
+    	try:
             events = {}
             if (all == 1):
                 events = event_filter.get_all_entries()
@@ -139,5 +139,6 @@ def callEventHandlers(_abi, all = 1):
                 contract_address = event['address']
                 new_contract = getContract(contract_address, _abi)
                 callEventHandle(event['event'], new_contract, event)
-    except Exception as e:
-        error('callEventHandlers fail, e: %s', e)
+	    except Exception as e:
+	        error('callEventHandlers fail, e: %s, name: %d', e, name)
+	        continue
