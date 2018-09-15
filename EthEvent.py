@@ -80,12 +80,15 @@ def createEventFilters(_abi, from_block, to_block = 0, confirm_block_num = 0):
             event_filter = None
             if (from_block == 'latest'):
                 event_filter = f.createFilter(fromBlock=from_block)
+                info('createFilter name: %s, from_block: %s', name, from_block)
 
             if (type(from_block) == int and to_block == 0):
                 event_filter = f.createFilter(fromBlock=from_block - confirm_block_num)
+                info('createFilter name: %s, from_block: %s', name, from_block - confirm_block_num)
 
             if (type(from_block) == int and to_block >= from_block):
                 event_filter = f.createFilter(fromBlock=from_block - confirm_block_num, toBlock=to_block)
+                info('createFilter name: %s, from_block: %s, to_block: %s', name, from_block - confirm_block_num, to_block)
 
             if (event_filter is None):
                 error('createEventFilters, createFilter none, name: %s, from_block: %d, to_block: %d, confirm_block_num: %d', 
